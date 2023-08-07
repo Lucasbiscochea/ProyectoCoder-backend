@@ -6,7 +6,7 @@ export default class CartManager{
      this.carts=[  
      ]
     }
-    //READ
+
     getCarts=async()=>{
     if(fs.existsSync(this.path)){
       const cartlist= await fs.promises.readFile(this.path,"utf-8")
@@ -33,13 +33,13 @@ export default class CartManager{
          return ("cart no existe");
         }
       } else {
-        return("cart file json  not found");
+        return("cart no existe");
       }
     } catch (error) {
       return(error);
     }
   }
-    //GENERATE ID 
+  
     generatecartId=async()=>{
       try {
         if (fs.existsSync(this.path)) {
@@ -74,10 +74,10 @@ export default class CartManager{
         const productIndex = cart.products.findIndex(p => p.pid === pid);
       
         if (productIndex !== -1) {
-          // Si el producto ya existe en el carrito, incrementar la cantidad
+        
           cart.products[productIndex].quantity++;
         } else {
-          // Si el producto no existe en el carrito, agregarlo como un nuevo objeto
+         
           cart.products.push({
             pid,
             quantity: 1

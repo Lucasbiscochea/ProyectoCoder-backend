@@ -13,22 +13,22 @@ router.get("/products", async (req, res) => {
 
 router.get("/products/:pid", async (req, res) => {
   const productfind = await manager.getProductbyId(req.params);
-  res.json({ status: "success", productfind });
+  res.json({ status: "Éxito", productfind });
 });
 
 router.post("/products", async (req, res) => {
   const newProduct = await manager.addProduct(req.body);
-  res.json({ status: "success", newProduct });
+  res.json({ status: "Éxito", newProduct });
 });
 
 router.put("/products:pid", async (req, res) => {
   const updatedProduct = await manager.updateProduct(req.params,req.body);
-  res.json({ status: "success", updatedProduct });
+  res.json({ status: "Éxito", updatedProduct });
 });
 
 router.delete("/products:pid", async (req, res) => {
   const deleteProduct = await manager.deleteProduct(req.params);
-  res.json({ status: "success", deleteProduct });
+  res.json({ status: "Éxito", deleteProduct });
 });
 
 export default router;

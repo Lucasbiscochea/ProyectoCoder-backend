@@ -40,7 +40,7 @@ export default class ProductManager {
           throw new Error("Producto no existe");
         }
       } else {
-        throw new Error("Product file not found");
+        throw new Error("Archivo de producto no encontrado");
       }
     } catch (error) {
       throw new Error(error);

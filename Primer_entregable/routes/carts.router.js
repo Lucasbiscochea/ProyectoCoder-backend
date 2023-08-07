@@ -17,7 +17,7 @@ router.get("/carts/:cid",async(req,res)=>{
 
 router.post("/carts/", async (req, res) => {
     const newcart = await manager.addCart();
-     res.json({ status: "success", newcart });
+     res.json({ status: "Éxito", newcart });
   });
 
   router.post("/carts/:cid/products/:pid", async (req, res) => {
@@ -26,10 +26,10 @@ router.post("/carts/", async (req, res) => {
       const pid = parseInt(req.params.pid);
   
       await manager.addProductToCart(cid, pid);
-      res.json({ status: "success", message: "Product added to cart successfully." });
+      res.json({ status: "Éxito", message: "Producto añadido al carrito con éxito." });
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      res.status(500).json({ status: "error", message: "Failed to add product to cart." });
+      res.status(500).json({ status: "error", message: "No se pudo agregar el producto al carrito." });
     }
   });
   

@@ -1,5 +1,5 @@
-const socketClient =io()
+const socketClient = io();
 
-socketClient.on("actualizacion",(obj)=>{
-    console.log(obj)
-})
+socketClient.on("actualizacion", (obj) => {
+  console.log(obj);
+});

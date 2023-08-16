@@ -4,13 +4,12 @@ socketCliente.on("productos", (products) => {
   updateProductList(products);
 });
 
-
 function updateProductList(products) {
-    let div = document.getElementById("list-products");
-    let productos = "";
-  
-    products.forEach((product) => {
-      productos += `
+  let div = document.getElementById("list-products");
+  let productos = "";
+
+  products.forEach((product) => {
+    productos += `
           <article class="container">
         <div class="card">
           <div class="imgBx">
@@ -36,12 +35,12 @@ function updateProductList(products) {
           
           
           `;
-    });
-  
-    div.innerHTML = productos;
-  }
+  });
 
-  let form = document.getElementById("formProduct");
+  div.innerHTML = productos;
+}
+
+let form = document.getElementById("formProduct");
 form.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
@@ -67,12 +66,11 @@ form.addEventListener("submit", (evt) => {
 });
 
 document.getElementById("delete-btn").addEventListener("click", function () {
-    const deleteidinput = document.getElementById("id-prod");
-    const deleteid = parseInt(deleteidinput.value);
-    socketCliente.emit("deleteProduct", deleteid);
-    deleteidinput.value = "";
-  });
+  const deleteidinput = document.getElementById("id-prod");
+  const deleteid = parseInt(deleteidinput.value);
+  socketCliente.emit("deleteProduct", deleteid);
+  deleteidinput.value = "";
+});
 socketCliente.on("productosupdated", (obj) => {
   updateProductList(obj);
 });
-

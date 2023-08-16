@@ -22,7 +22,7 @@ router.post("/products", async (req, res) => {
 });
 
 router.put("/products:pid", async (req, res) => {
-  const updatedProduct = await manager.updateProduct(req.params,req.body);
+  const updatedProduct = await manager.updateProduct(req.params, req.body);
   res.json({ status: "Éxito", updatedProduct });
 });
 

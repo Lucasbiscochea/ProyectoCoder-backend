@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "Memoria Ram",
+    "description": "8gb 3200mhz",
+    "price": 15000,
+    "thumbnail": "https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/MD8GSD4320016XSRGB_800.jpg",
+    "code": "12044",
+    "stock": 5
+  },
+  {
+    "id": 2,
+    "title": "Tarjeta Grafica",
+    "description": "8gb",
+    "price": 200000,
+    "thumbnail": "https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N4080AERO-OC-16GD_800.jpg",
+    "code": "12045",
+    "stock": 3
+  },
+  {
+    "id": 3,
+    "title": "Fuente",
+    "description": "1000 Watts 80plus Platinum",
+    "price": 30000,
+    "thumbnail": "https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/100-BR-0700_800.jpg",
+    "code": "12046",
+    "stock": 5
+  }
+]

@@ -1,21 +1,19 @@
-const socketClient=io()
+const socketClient = io();
 
-
-socketClient.on("enviodeproducts",(obj)=>{
-    updateProductList(obj)
-})
-
+socketClient.on("enviodeproducts", (obj) => {
+  updateProductList(obj);
+});
 
 function updateProductList(products) {
-  let div = document.getElementById("list-products");
-  let productos = "";
+  const div = document.getElementById("list-products");
+  let productosHTML = "";
 
   products.forEach((product) => {
-    productos += `
-          <article class="container">
+    productosHTML += `
+      <article class="container">
         <div class="card">
           <div class="imgBx">
-            <img src="${product.thumbnail}"/>
+            <img src="${product.thumbnail}" alt="Product Image"/>
           </div>
           <div class="contentBx">
             <h2>${product.title}</h2>
@@ -25,34 +23,26 @@ function updateProductList(products) {
             <div class="stock">
               <h3>Stock: ${product.stock}</h3>
             </div>
-            <a href="#">Buy Now</a>
+            <a href="#">Comprar Ahora</a>
           </div>
         </div>
-        
-      </article>
-          
-          
-          
-          
-          
-          
-          `;
+      </article>`;
   });
 
-  div.innerHTML = productos;
+  div.innerHTML = productosHTML;
 }
 
-let form = document.getElementById("formProduct");
+const form = document.getElementById("formProduct");
 form.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
-  let title = form.elements.title.value;
-  let description = form.elements.description.value;
-  let stock = form.elements.stock.value;
-  let thumbnail = form.elements.thumbnail.value;
-  let category = form.elements.category.value;
-  let price = form.elements.price.value;
-  let code = form.elements.code.value;
+  const title = form.elements.title.value;
+  const description = form.elements.description.value;
+  const stock = form.elements.stock.value;
+  const thumbnail = form.elements.thumbnail.value;
+  const category = form.elements.category.value;
+  const price = form.elements.price.value;
+  const code = form.elements.code.value;
 
   socketClient.emit("addProduct", {
     title,
@@ -67,10 +57,14 @@ form.addEventListener("submit", (evt) => {
   form.reset();
 });
 
-document.getElementById("delete-btn").addEventListener("click", function () {
-  const deleteidinput = document.getElementById("id-prod");
-  const deleteid = deleteidinput.value;
-  console.log(deleteid)
-  socketClient.emit("deleteProduct", deleteid);
-  deleteidinput.value = "";
+document.getElementById("delete-btn").addEventListener("click", () => {
+  const deleteIdInput = document.getElementById("delete-id");
+  const deleteId = deleteIdInput.value;
+  
+  const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este producto?");
+  
+  if (confirmDelete) {
+    socketClient.emit("deleteProduct", deleteId);
+    deleteIdInput.value = "";
+  }
 });

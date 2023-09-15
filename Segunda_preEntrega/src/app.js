@@ -1,80 +1,62 @@
-import express from "express"
-import productRouter from "./routes/products.router.js"
-import cartRouter from "./routes/carts.router.js"
-import viewRouter from "./routes/view.router.js"
-import { __dirname } from "./utils.js"
-import handlebars from "express-handlebars";
-import {Server} from "socket.io"
-import "./dao/dbConfig.js"
+import express from "express";
+import __dirname from "./utils.js";
+import expressHandlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access'
+import { Server } from "socket.io";
+import mongoose from "mongoose";
+import ProductManager from "./dao/mongomanagers/productManagerMongo.js";
+import ChatManager from "./dao/mongomanagers/messagerManagerMongo.js";
+import productsRouter from "./routes/products.router.js";
+import cartsRouter from "./routes/carts.router.js";
+import viewsRouter from "./routes/views.routes.js";
 
 
+const app = express();
+const puerto = 8080;
+const httpServer = app.listen(puerto, () => {
+    console.log("Servidor Activo en el puerto: " + puerto);
+});
+const socketServer = new Server(httpServer);
+const PM = new ProductManager();
+const CM = new ChatManager();
 
-
-const app= express()
-const PORT=process.env.PORT||8080
-
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(express.static(__dirname+"/public"))
-
-app.engine("handlebars", handlebars.engine());
-app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
+app.engine('handlebars', expressHandlebars.engine({
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
+}));
+app.set("view engine", "handlebars");
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(express.static(__dirname + "/public"));
+app.use("/api/products/", productsRouter);
+app.use("/api/carts/", cartsRouter);
+app.use("/", viewsRouter);
 
-app.use("/api",productRouter)
-app.use("/api",cartRouter)
-app.use("/",viewRouter)
+mongoose.connect("mongodb+srv://luckscardozo19:tl9nSzHK5ElH7EaE@cluster0.vytxhyv.mongodb.net/prohardware?retryWrites=true&w=majority");
 
-const httpServer = app.listen(PORT,()=>{
-    console.log("servidor en funcionamiento");
-  });
+socketServer.on("connection", (socket) => {
+    console.log("Nueva Conexión!");
 
+    const products = PM.getProducts();
+    socket.emit("realTimeProducts", products);
 
-  const socketServer = new Server(httpServer);
+    socket.on("nuevoProducto", (data) => {
+        const product = {title:data.title, description:"", code:"", price:data.price, status:"", stock:10, category:"", thumbnail:data.thumbnail};
+        PM.addProduct(product);
+        const products = PM.getProducts();
+        socket.emit("realTimeProducts", products);
+    });
 
-  import ProductManager from "./dao/mongomanagers/productManagerMongo.js"
-  const pmanagersocket=new ProductManager()
-  
-  
-  import MessagesManager from "./dao/mongomanagers/messagerManagerMongo.js";
-  const messagesManager = new MessagesManager();
-  
-  
-  
-  socketServer.on("connection",async(socket)=>{
-    console.log("client connected con ID:",socket.id)
-     const listadeproductos=await pmanagersocket.getProducts()
-    socketServer.emit("enviodeproducts",listadeproductos)
+    socket.on("eliminarProducto", (data) => {
+        PM.deleteProduct(parseInt(data));
+        const products = PM.getProducts();
+        socket.emit("realTimeProducts", products);
+    });
 
-    socket.on("addProduct",async(obj)=>{
-    await pmanagersocket.addProduct(obj)
-    const listadeproductos=await pmanagersocket.getProducts()
-    socketServer.emit("enviodeproducts",listadeproductos)
-    })
-
-    socket.on("deleteProduct",async(id)=>{
-        console.log(id)
-       await pmanagersocket.deleteProduct(id)
-        const listadeproductos=await pmanagersocket.getProducts({})
-        socketServer.emit("enviodeproducts",listadeproductos)
-        })
-  
-  
-  
-          socket.on("nuevousuario",(usuario)=>{
-              console.log("usuario" ,usuario)
-              socket.broadcast.emit("broadcast",usuario)
-             })
-             socket.on("disconnect",()=>{
-                 console.log(`Usuario con ID : ${socket.id} esta desconectado `)
-             })
-         
-             socket.on("mensaje", async (info) => {
-              
-              console.log(info)
-              await messagesManager.createMessage(info);
-              
-              socketServer.emit("chat", await messagesManager.getMessages());
-            });
-      
-  })
+    socket.on("newMessage", async (data) => {
+        CM.createMessage(data);
+        const messages = await CM.getMessages();
+        socket.emit("messages", messages);
+    });
+});

@@ -44,7 +44,7 @@ form.addEventListener("submit", (evt) => {
   const price = form.elements.price.value;
   const code = form.elements.code.value;
 
-  socketClient.emit("addProduct", {
+  socketClient.emit("agregarProducto", {
     title,
     description,
     stock,

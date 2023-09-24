@@ -43,12 +43,12 @@ const httpServer = app.listen(PORT,()=>{
   
   socketServer.on("connection",async(socket)=>{
     console.log("client connected con ID:",socket.id)
-     const listadeproductos=await pmanagersocket.getProducts()
-    socketServer.emit("enviodeproducts",listadeproductos)
+     const product=await PM.getProducts()
+    socketServer.emit("realTimeProducts", products)
 
-    socket.on("addProduct",async(obj)=>{
-    await pmanagersocket.addProduct(obj)
-    const listadeproductos=await pmanagersocket.getProducts()
+    socket.on("nuevoProducto",async(obj)=>{
+    await PM.addProduct(obj)
+    const product=await PM.getProducts()
     socketServer.emit("enviodeproducts",listadeproductos)
     })
 

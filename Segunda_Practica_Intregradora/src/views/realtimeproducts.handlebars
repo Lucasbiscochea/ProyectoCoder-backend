@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Agregar Producto</h2>
+  <form id="formProduct" class="row g-3">
+    <div class="col-md-6 mb-3">
+      <label for="title" class="form-label">Nombre del Producto</label>
+      <input class="form-control" type="text" name="title" id="title" placeholder="Ingrese Nombre del Producto" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="description" class="form-label">Descripción</label>
+      <input class="form-control" type="text" name="description" id="description" placeholder="Ingrese descripción" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input class="form-control" type="number" name="stock" id="stock" placeholder="Ingrese su stock" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="thumbnail" class="form-label">Imagen URL</label>
+      <input class="form-control" type="text" name="thumbnail" id="thumbnail" placeholder="Ingrese su imagen URL" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="category" class="form-label">Categoría</label>
+      <input class="form-control" type="text" name="category" id="category" placeholder="Ingrese categoría" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="price" class="form-label">Precio</label>
+      <input class="form-control" type="number" name="price" id="price" placeholder="Ingrese su precio" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="code" class="form-label">Código</label>
+      <input class="form-control" type="text" name="code" id="code" placeholder="Ingrese su código" required>
+    </div>
+    <div class="col-md-12 mb-3">
+      <button class="btn btn-dark" type="submit" id="add-btn">Registrar</button>
+    </div>
+  </form>
+</div>
+
+<div class="container mt-4">
+  <h2 class="mb-4">Eliminar Producto</h2>
+  <div class="mb-3">
+    <input type="text" id="delete-id" name="delete-id" class="form-control" placeholder="Ingrese el ID">
+  </div>
+  <div class="col-md-12 mb-3">
+    <button class="btn btn-danger" type="button" id="delete-btn">Eliminar</button>
+  </div>
+</div>

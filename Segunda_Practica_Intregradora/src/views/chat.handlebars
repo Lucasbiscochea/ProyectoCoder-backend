@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="text-center bg-dark p-3 rounded-top">
+                <h1 class="display-5 mb-4 text-white">Chat en línea</h1>
+            </div>
+
+            <div class="mb-3">
+                <label for="user" class="form-label">User</label>
+                <input type="text" class="form-control" id="user" placeholder="Nombre de usuario">
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <input type="text" class="form-control" id="message" placeholder="Escribe tu mensaje">
+            </div>
+            <button type="button" class="btn btn-primary btn-block chat-btn" id="btnSendMessage">Enviar</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .chat-box {
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .chat-box p {
+        margin-bottom: 5px;
+    }
+
+    .chat-btn {
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #333;
+        border-radius: 5px;
+        margin-top: 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+    }
+
+    .chat-btn:hover {
+        background-color: #1c1c1c;
+        border-color: #1c1c1c;
+        transform: scale(1.05);
+    }
+</style>
